@@ -1,0 +1,54 @@
+{
+  "name": "jobs-dashboard",
+  "productName": "Jobs Dashboard",
+  "version": "0.0.1",
+  "description": "Desktop JobBoard to track and manage job postings and applications.",
+  "author": "Chandan Naidu <chandan.naidu97@gmail.com>",
+  "type": "module",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .\"",
+    "build": "vite build",
+    "start:prod": "electron electron/main.js",
+    "pack": "npm run build && electron-builder --dir",
+    "dist": "npm run build && electron-builder --mac"
+  },
+  "devDependencies": {
+    "@electron/notarize": "^3.1.0",
+    "@eslint/js": "^9.36.0",
+    "@types/react": "^19.1.13",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "concurrently": "^9.2.1",
+    "cross-env": "^10.1.0",
+    "electron": "^38.2.0",
+    "electron-builder": "^26.0.12",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.20",
+    "globals": "^16.4.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.7",
+    "wait-on": "^9.0.1"
+  },
+  "build": {
+    "appId": "com.yourdomain.jobboard",
+    "productName": "JobBoard",
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "asar": true,
+    "directories": {
+      "buildResources": "build"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "hardenedRuntime": false,
+      "identity": null,
+      "icon": "build/icon.icns",
+      "category": "public.app-category.developer-tools"
+    }
+  }
+}
