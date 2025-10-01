@@ -4,8 +4,6 @@
 Track, search, and manage job postings and applications in a fast desktop app built with **Electron + Vite + React** and **Supabase**.
 
 ![App dashboard](docs/app-hero.png)
-![Jobs table view](docs/app-table.png)
-![Supabase schema](docs/supabase-schema.png)
 
 
 <p align="center">
@@ -91,6 +89,8 @@ This starts Vite on `http://localhost:5173` and launches Electron with `VITE_DEV
 
 ---
 
+![Supabase schema](docs/supabase-schema.png)
+
 ## 🗄 Database Schema
 
 Use this SQL in Supabase (SQL Editor) to create a minimal table with basic RLS:
@@ -136,6 +136,8 @@ create policy "delete jobs" on jobs for delete using (true);
 
 > For multi-user scenarios, add an `owner` uuid column and policies tied to `auth.uid()`.
 
+
+![Jobs table view](docs/app-table.png)
 ---
 
 ## 📁 Project Structure
